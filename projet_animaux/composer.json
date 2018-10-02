@@ -1,0 +1,11 @@
+{
+    "name": "julie/poo",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Helper\\": "helper/",
+            "Controller\\": "controller/",
+            "Model\\": "model/"
+        }
+    }
+}
