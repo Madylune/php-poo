@@ -18,8 +18,8 @@ abstract class Model
 
     protected $table = 'pages';
 
-    public function getAll() {
-        $request = $this->dbConnec->prepare('SELECT * FROM ' . $this->table);
+    public function getAll($column) {
+        $request = $this->dbConnec->prepare('SELECT ' . $column . ' FROM ' . $this->table);
         $request->execute();
         $result = $request->fetchAll();
         return $result;
