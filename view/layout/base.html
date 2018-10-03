@@ -7,14 +7,19 @@
     <title>{{TITLE}}</title>
     <style>
         body { background-color: black; color: white; }
+        a { color:violet; text-decoration: none; }
+        a:hover { font-weight: bold; }
     </style>
 </head>
 <body>
-    {{MY_NAME}}
-    {{MENU}}
-    <div>
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
         {{CONTENT}}
     </div>
-
 </body>
 </html>
