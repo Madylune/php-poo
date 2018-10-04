@@ -16,10 +16,10 @@ class View
 
     private function getMenu() {
         $page = new Page();
-        $titles = $page->getAll('title');
+        $menuItems = $page->getAll(['title']);
         $menu = '';
-        foreach ($titles as $value) {
-            $menu .= '<li><a href="' . $value['title'] . '">' . ucfirst($value['title']) . '</a></li>';
+        foreach ($menuItems as $value) {
+            $menu .= '<li><a href="/' . $value['title'] . '">' . ucfirst($value['title']) . '</a></li>';
         }
         return $menu;
     }
@@ -28,9 +28,23 @@ class View
     public function renderView($viewName) { 
         $page = new Page();
         $content = $page->getOne('title', $viewName)["content"]; 
+        $content .= '<a href="' . $viewName . '/edit">I want to edit this page</a>';
         $template = $this->loadView('base'); //On charge le template 'base'
         $renderHTML = str_replace('{{CONTENT}}', $content, $template); //On remplace {{CONTENT}} dans $template par $content
         $renderHTML = str_replace('{{TITLE}}', ucfirst($viewName), $renderHTML);
+        $menu = $this->getMenu();
+        $renderHTML = str_replace('{{MENU}}', $menu , $renderHTML);
+        echo $renderHTML; 
+    }
+
+    public function renderAdminView($viewName) {
+        $page = new Page();
+        $content = file_get_contents($this->viewDirectory.'/layout/edit.html');
+        $template = $this->loadView('base'); //On charge le template 'base');
+        $renderHTML = str_replace('{{CONTENT}}', $content, $template); //On remplace {{CONTENT}} dans $template par $content
+        $toEditContent = $page->getOne('title', $viewName[0])["content"]; 
+        $renderHTML = str_replace('{{TOEDIT}}', $toEditContent, $renderHTML);
+        $renderHTML = str_replace('{{TITLE}}', ucfirst($viewName[1]), $renderHTML);
         $menu = $this->getMenu();
         $renderHTML = str_replace('{{MENU}}', $menu , $renderHTML);
         echo $renderHTML; 

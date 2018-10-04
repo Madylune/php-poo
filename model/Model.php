@@ -18,11 +18,24 @@ abstract class Model
 
     protected $table = 'pages';
 
-    public function getAll($column) {
-        $request = $this->dbConnec->prepare('SELECT ' . $column . ' FROM ' . $this->table);
+    public function getAll($limiters) {
+        //Permet de passer plusieurs arguments pour le SELECT
+        if(gettype($limiters) === 'array') {
+            $selectLimiter = "";
+            for ($i=0; $i < count($limiters); $i++) {
+                if($i == (count($limiters) - 1)) {
+                  $selectLimiter .= $limiters[$i];
+                } else {
+                  $selectLimiter .= $limiters[$i] . ', ';
+                }
+            }
+            $sql = 'SELECT ' . $selectLimiter . ' FROM ' . $this->table;
+        } else {
+            $sql = 'SELECT * FROM ' . $this->table;
+        }
+        $request = $this->dbConnec->prepare($sql);
         $request->execute();
-        $result = $request->fetchAll();
-        return $result;
+        return $request->fetchAll();
     }
 
     public function getOneById($value) {
