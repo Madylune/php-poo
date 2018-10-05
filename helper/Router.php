@@ -20,11 +20,6 @@ class Router
         //On cherche la méthode correspondante dans le Dispatcher à la route
         if (method_exists($dispatcher, 'getView')) {
             $dispatcher::getView($uri);
-            // if (count($uri) === 1) {
-            //     $dispatcher::getView($uri[0]);
-            // } else {
-            //     $dispatcher::getView($uri[1]);
-            // }
         } else {
             $dispatcher::code404();
         }

@@ -11,7 +11,7 @@ class Dispatcher
         if (count($uri) === 1) {
             $view->renderView($uri[0]);
         } elseif ($uri[1] === 'edit') {
-            $view->renderAdminView($uri);
+            $view->renderEditView($uri);
         } else {
             echo '<h2>404: No route found</h2>';
         }

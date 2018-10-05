@@ -1,13 +1,13 @@
 <?php
 namespace Model;
-//Permettre la connexion avec la base de données à l'instanciation d'un objet de class Model
+
 abstract class Model
 {
     protected $dbConnec;
     
     function __construct() {
         try {
-            $this->dbConnec = new \PDO('mysql:host=localhost;dbname='.$GLOBALS['config']['SGBDDatabase'], $GLOBALS['config']['SGBDUser'], $GLOBALS['config']['SGBDPass'], [
+            $this->dbConnec = new \PDO('mysql:host=localhost;dbname='.$GLOBALS['config']['DBdatabase'], $GLOBALS['config']['DBUser'], $GLOBALS['config']['DBPass'], [
                 \PDO::ATTR_ERRMODE              => \PDO::ERRMODE_EXCEPTION,
                 \PDO::ATTR_DEFAULT_FETCH_MODE   => \PDO::FETCH_ASSOC,
             ]);
@@ -16,10 +16,9 @@ abstract class Model
         }
     }
 
-    protected $table = 'pages';
+    protected $table = 'sections';
 
-    public function getAll($limiters) {
-        //Permet de passer plusieurs arguments pour le SELECT
+    public function getAllSections($limiters) {
         if(gettype($limiters) === 'array') {
             $selectLimiter = "";
             for ($i=0; $i < count($limiters); $i++) {
@@ -38,7 +37,7 @@ abstract class Model
         return $request->fetchAll();
     }
 
-    public function getOneById($value) {
+    public function getOneSectionById($value) {
         $request = $this->dbConnec->prepare('SELECT * FROM ' . $this->table . ' WHERE id = :value');
         $request->execute(['value' => $value]);
         $result = $request->fetch();
@@ -49,19 +48,8 @@ abstract class Model
         }
     }
 
-    public function getOne($column, $value) {
+    public function getOneSection($column, $value) {
         $request = $this->dbConnec->prepare('SELECT * FROM ' . $this->table . ' WHERE ' . $column .  ' = :value');
-        $request->execute(['value' => $value]);
-        $result = $request->fetch();
-        if($result !== null) {
-            return $result;
-        } else {
-            return false;
-        }
-    }
-
-    public function updatePage() {
-        $request = $this->dbConnec->prepare('UPDATE '. $this->table.' SET content="'.$content.'" WHERE title="'.$value .'"');
         $request->execute(['value' => $value]);
         $result = $request->fetch();
         if($result !== null) {

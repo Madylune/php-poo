@@ -37,16 +37,28 @@ class View
         echo $renderHTML; 
     }
 
-    public function renderAdminView($viewName) {
+    public function renderEditView($viewName) {
+        //On charge la base
+        $template = $this->loadView('base');
+
+        //On récupère les données pour la vue
         $page = new Page();
-        $content = file_get_contents($this->viewDirectory.'/layout/edit.html');
-        $template = $this->loadView('base'); //On charge le template 'base');
-        $renderHTML = str_replace('{{CONTENT}}', $content, $template); //On remplace {{CONTENT}} dans $template par $content
         $toEditContent = $page->getOne('title', $viewName[0])["content"]; 
+
+        //On charge le contenu de la page avec le fichier edit.html
+        $content = file_get_contents($this->viewDirectory.'/layout/edit.html');
+        
+        //On remplace les champs
+        $renderHTML = str_replace('{{CONTENT}}', $content, $template);
         $renderHTML = str_replace('{{TOEDIT}}', $toEditContent, $renderHTML);
         $renderHTML = str_replace('{{TITLE}}', ucfirst($viewName[1]), $renderHTML);
+        $renderHTML .= '<a href="/' . $viewName[0] . '">Retour</a>';
+
+        //On charge le menu
         $menu = $this->getMenu();
         $renderHTML = str_replace('{{MENU}}', $menu , $renderHTML);
+
+        //On renvoie le tout
         echo $renderHTML; 
     }
 }

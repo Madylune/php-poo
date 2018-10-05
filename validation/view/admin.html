@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My website</title>
+    <style>
+        body { margin: 0; padding: 0; background-image: url('img/admin-bg.jpg'); background-size: cover; color:#333;}
+        header { background-color: black; color: white; }
+        img { height: 200px ;}
+        nav ul { list-style: none; display: flex; justify-content: center; }
+        nav li { display: inline-block; margin: 0 20px 0 20px; font-size: 25px; }
+        nav a { color:#fff; text-decoration: none; }
+        a:hover { font-weight: bold; }
+        a { text-decoration: none; }
+        h2 { color:#fff; }
+        form { display: flex; flex-direction: column; }
+        textarea { height: 200px; width: 500px; margin-bottom: 10px; }
+        input { width: 100px;}
+        .container { text-align: center; }
+        .section { background-color: rgba(255, 255, 255, 0.5); width: 50%; margin: 20px auto; border: 5px solid white; }
+        .section-container ul { list-style: none; }
+        .section-container a { color: white;  }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="">Reorder items</a></li>
+                <li><a href="/normal">Normal Mode</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="section-container">
+            {{CONTENT}}
+        </div>
+    </div>
+</body>
+</html>
